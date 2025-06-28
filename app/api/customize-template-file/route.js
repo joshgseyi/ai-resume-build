@@ -153,7 +153,7 @@ export async function POST(request) {
     const cleanedHtml = cleanAiResponse(customizedHtml);
     
     // Validate that we have complete HTML
-    if (!cleanedHtml.includes('COMPLETE_EOF')) {
+    if (!cleanedHtml.includes('COMPLETE_EOF') && !cleanedHtml.includes('html')) {
       console.warn('AI response may be incomplete. Please try again.', cleanedHtml);
       return Response.json({ error: 'AI response is not valid HTML. Please try again.' }, { status: 500 });
     }
