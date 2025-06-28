@@ -363,6 +363,7 @@ export default function ResumeTemplateList({
                       className={styles.templateName}
                       onDoubleClick={e => { e.stopPropagation(); handleNameEdit(template); }}
                       tabIndex={0}
+                      title={template.displayName}
                       onKeyDown={e => {
                         if (e.key === 'Enter' || e.key === ' ') {
                           e.preventDefault();

@@ -250,6 +250,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   text-align: left;
+  max-width: 200px;
 }
 
 .templateMeta {
@@ -329,6 +330,10 @@
   .templateMeta {
     flex-direction: column;
     gap: 0.25rem;
+  }
+
+  .templateName {
+    max-width: 150px;
   }
 }
 
