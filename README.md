@@ -1,6 +1,8 @@
 # AI Resume Optimizer
 
-An intelligent web application that optimizes resume templates based on job posting URLs using AI. The app crawls job posting pages, extracts keywords and requirements, and generates customized resume templates tailored to specific job opportunities.
+## 🖼️ Screenshot
+
+![AI Resume Optimizer Screenshot](screengrab.png)
 
 ## 🚀 Features
 
