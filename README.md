@@ -32,6 +32,8 @@
 
 ## 🔧 Installation
 
+### Option 1: Traditional Installation
+
 1. **Clone the repository**
    ```bash
    git clone <your-repo-url>
@@ -50,6 +52,46 @@
 
 4. **Open your browser**
    Navigate to [http://localhost:3000](http://localhost:3000)
+
+### Option 2: Docker Installation
+
+The project includes comprehensive Docker support for both development and production environments.
+
+#### Quick Start with Docker
+
+**Development Environment:**
+```bash
+# Start development environment with hot reloading
+docker-compose --profile dev up
+```
+
+**Production Environment:**
+```bash
+# Start production environment
+docker-compose --profile prod up
+```
+
+**Production with Nginx Reverse Proxy:**
+```bash
+# Start with nginx reverse proxy
+docker-compose --profile nginx up
+```
+
+#### Manual Docker Commands
+
+**Development:**
+```bash
+docker build -f Dockerfile.dev -t resume-app-dev .
+docker run -p 3000:3000 -v $(pwd):/app resume-app-dev
+```
+
+**Production:**
+```bash
+docker build -t resume-app-prod .
+docker run -p 3000:3000 resume-app-prod
+```
+
+For detailed Docker documentation, see [DOCKER.md](DOCKER.md).
 
 ---
 
