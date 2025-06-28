@@ -51,6 +51,12 @@
 4. **Open your browser**
    Navigate to [http://localhost:3000](http://localhost:3000)
 
+---
+
+**Note**: This application is designed for personal use. Always review AI-generated content before using it in professional applications. 
+
+**Important Limitation**: The app is designed to work with publicly accessible job posting URLs. It is unlikely to work with job links that require authentication (e.g., LinkedIn, internal company portals, or any site behind a login). For best results, use job postings that are viewable without logging in.
+
 ## 🎯 Usage
 
 ### Getting Started
@@ -156,4 +162,5 @@ If you encounter any issues or have questions:
 
 ---
 
-**Note**: This application is designed for personal use. Always review AI-generated content before using it in professional applications. 
+**Note**: This application is designed for personal use. Always review AI-generated content before using it in professional applications.
+
