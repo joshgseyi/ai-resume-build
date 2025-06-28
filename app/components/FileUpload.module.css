@@ -1,0 +1,227 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.modal {
+  background: rgba(26, 32, 44, 0.95);
+  border-radius: 16px;
+  border: 1px solid rgba(74, 85, 104, 0.3);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+  max-width: 500px;
+  width: 100%;
+  max-height: 90vh;
+  overflow: hidden;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 1.5rem 1rem;
+  border-bottom: 1px solid rgba(74, 85, 104, 0.3);
+}
+
+.header h2 {
+  color: #f7fafc;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  color: #a0aec0;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.closeButton:hover:not(:disabled) {
+  background: rgba(239, 68, 68, 0.2);
+  color: #fc8181;
+}
+
+.closeButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.closeButton svg {
+  width: 20px;
+  height: 20px;
+}
+
+.content {
+  padding: 1.5rem;
+}
+
+.dropZone {
+  border: 2px dashed rgba(113, 128, 150, 0.5);
+  border-radius: 12px;
+  padding: 3rem 2rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: rgba(45, 55, 72, 0.3);
+}
+
+.dropZone:hover:not(.uploading) {
+  border-color: #63b3ed;
+  background: rgba(45, 55, 72, 0.5);
+}
+
+.dropZone.dragOver {
+  border-color: #63b3ed;
+  background: rgba(99, 179, 237, 0.1);
+  transform: scale(1.02);
+}
+
+.dropZone.uploading {
+  cursor: not-allowed;
+  border-color: #38a169;
+  background: rgba(56, 161, 105, 0.1);
+}
+
+.dropContent {
+  color: #f7fafc;
+}
+
+.uploadIcon {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 1rem;
+  color: #a0aec0;
+}
+
+.uploadIcon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.dropContent h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #f7fafc;
+}
+
+.dropContent p {
+  color: #a0aec0;
+  margin-bottom: 1.5rem;
+}
+
+.fileTypes {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: 0.875rem;
+  color: #718096;
+}
+
+.fileTypes span {
+  display: block;
+}
+
+.uploadingContent {
+  color: #f7fafc;
+}
+
+.uploadingContent p {
+  margin-bottom: 1rem;
+  color: #a0aec0;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(56, 161, 105, 0.3);
+  border-top: 3px solid #38a169;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 1rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.progressBar {
+  width: 100%;
+  height: 8px;
+  background: rgba(74, 85, 104, 0.3);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+
+.progressFill {
+  height: 100%;
+  background: linear-gradient(90deg, #38a169, #48bb78);
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.progressText {
+  font-size: 0.875rem;
+  color: #a0aec0;
+  font-weight: 500;
+}
+
+.fileInput {
+  display: none;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .overlay {
+    padding: 0.5rem;
+  }
+  
+  .modal {
+    max-width: none;
+    width: 100%;
+  }
+  
+  .header {
+    padding: 1rem 1rem 0.75rem;
+  }
+  
+  .header h2 {
+    font-size: 1.25rem;
+  }
+  
+  .content {
+    padding: 1rem;
+  }
+  
+  .dropZone {
+    padding: 2rem 1rem;
+  }
+  
+  .uploadIcon {
+    width: 48px;
+    height: 48px;
+  }
+  
+  .dropContent h3 {
+    font-size: 1.125rem;
+  }
+} 

@@ -1,0 +1,165 @@
+# AI Resume Optimizer
+
+An intelligent web application that optimizes resume templates based on job posting URLs using AI. The app crawls job posting pages, extracts keywords and requirements, and generates customized resume templates tailored to specific job opportunities.
+
+## 🚀 Features
+
+- **AI-Powered Optimization**: Uses OpenAI GPT models to analyze job postings and optimize resume templates
+- **Smart Web Crawling**: Automatically crawls job posting URLs to extract relevant content
+- **Template Management**: Create, edit, and manage multiple resume templates
+- **Keyword Extraction**: AI identifies and incorporates relevant keywords from job postings
+- **Duplicate Detection**: Prevents processing the same URL multiple times
+- **Streaming Responses**: Handles large AI responses efficiently with streaming
+- **Modern UI**: Clean, dark-themed interface with responsive design
+- **Template Preview**: Preview resume templates before downloading
+- **PDF Export**: Download optimized resumes as PDF files
+
+## 🛠️ Tech Stack
+
+- **Frontend**: Next.js 14, React, CSS Modules
+- **Backend**: Next.js API Routes
+- **AI**: OpenAI GPT-4o (configurable)
+- **Styling**: Custom CSS with dark theme
+- **File Handling**: Node.js file system operations
+
+## 📋 Prerequisites
+
+- Node.js 18+ 
+- npm or yarn
+- OpenAI API key
+
+## 🔧 Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone <your-repo-url>
+   cd ResumeApp/app
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Run the development server**
+   ```bash
+   npm run dev
+   ```
+
+4. **Open your browser**
+   Navigate to [http://localhost:3000](http://localhost:3000)
+
+## 🎯 Usage
+
+### Getting Started
+
+1. **Access the App**: Open the application in your browser
+2. **View Help**: Click the "Help" button for detailed usage instructions
+3. **Manage Templates**: Use "View Resumes" to create and manage templates
+
+### Processing Job URLs
+
+1. **Enter Job URL**: Paste a job posting URL in the input field
+2. **Select Templates**: Choose which resume templates to optimize
+3. **Process**: Click "Process URL" to start the optimization
+4. **Review Results**: View and download the optimized templates
+
+### Template Management
+
+- **Create Templates**: Add new resume templates with custom content
+- **Edit Templates**: Double-click template names to edit
+- **Preview Templates**: Double-click templates to preview content
+- **Download Templates**: Use the download button to save as PDF
+
+## 📁 Project Structure
+
+```
+app/
+├── app/
+│   ├── api/                 # API routes
+│   │   ├── crawl/          # URL crawling endpoint
+│   │   ├── process-with-ai/ # AI processing endpoint
+│   │   ├── settings/       # Settings management
+│   │   └── ...            # Other API endpoints
+│   ├── components/         # React components
+│   ├── new-template/       # Template creation page
+│   ├── usage/             # Help and usage page
+│   └── page.js            # Main application page
+├── data/                  # Data storage
+│   ├── __resume_templates/ # Generated templates
+│   ├── crawls/            # Crawled data
+│   └── settings.json      # App settings
+├── public/                # Static assets
+└── temp/                  # Temporary files
+```
+
+## ⚙️ Configuration
+
+### AI Model Settings
+
+The app uses GPT-4o by default, but you can configure different models:
+
+1. Go to Settings in the app
+2. Select your preferred GPT model
+3. Save the configuration
+
+### API Endpoints
+
+- `POST /api/crawl` - Crawl job posting URLs
+- `POST /api/process-with-ai` - Process content with AI
+- `GET /api/settings` - Get app settings
+- `POST /api/settings` - Update app settings
+
+## 🔒 Security
+
+- API keys are stored securely in environment variables
+- Input validation on all endpoints
+- Rate limiting for API calls
+- Secure file handling
+
+## 🐛 Troubleshooting
+
+### Common Issues
+
+1. **API Key Error**: Ensure your OpenAI API key is correctly set in `.env.local`
+2. **Crawl Failures**: Some websites may block automated crawling
+3. **Token Limits**: Large job postings may exceed AI token limits (handled automatically)
+4. **File Permissions**: Ensure the app has write permissions to the `data` directory
+
+### Debug Mode
+
+Enable debug logging by setting:
+```env
+DEBUG=true
+```
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- OpenAI for providing the GPT API
+- Next.js team for the excellent framework
+- The open-source community for various tools and libraries
+
+## 📞 Support
+
+If you encounter any issues or have questions:
+
+1. Check the help section in the app
+2. Review the troubleshooting guide above
+3. Open an issue on GitHub
+4. Check the usage documentation at `/usage`
+
+---
+
+**Note**: This application is designed for personal use. Always review AI-generated content before using it in professional applications. 
