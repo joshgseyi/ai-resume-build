@@ -121,17 +121,9 @@ The app uses GPT-4o by default, but you can configure different models:
 
 ### Common Issues
 
-1. **API Key Error**: Ensure your OpenAI API key is correctly set in `.env.local`
-2. **Crawl Failures**: Some websites may block automated crawling
-3. **Token Limits**: Large job postings may exceed AI token limits (handled automatically)
-4. **File Permissions**: Ensure the app has write permissions to the `data` directory
-
-### Debug Mode
-
-Enable debug logging by setting:
-```env
-DEBUG=true
-```
+1. **Crawl Failures**: Some websites may block automated crawling
+2. **Token Limits**: Large job postings may exceed AI token limits (handled automatically)
+3. **File Permissions**: Ensure the app has write permissions to the `data` directory
 
 ## 🤝 Contributing
 
