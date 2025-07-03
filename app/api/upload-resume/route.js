@@ -1,7 +1,8 @@
 import { writeFile, mkdir, access } from 'fs/promises';
 import { join } from 'path';
-import { NextRequest } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import fs from 'fs';
+import { execSync } from 'child_process'; // ✅ to convert PDF
 
 // Helper function to read checked templates
 function readCheckedTemplates() {
@@ -33,89 +34,75 @@ export async function POST(request) {
   try {
     const formData = await request.formData();
     const file = formData.get('resume');
-    const htmlContent = formData.get('htmlContent'); // Frontend will send converted HTML
+    const htmlContent = formData.get('htmlContent');
 
     if (!file) {
-      return Response.json({ error: 'No file provided' }, { status: 400 });
+      return NextResponse.json({ error: 'No file provided' }, { status: 400 });
     }
 
-    // Validate file type - only images allowed
-    const allowedTypes = [
-      'image/jpeg',
-      'image/jpg',
-      'image/png',
-      'image/gif',
-      'image/webp'
-    ];
-
-    if (!allowedTypes.includes(file.type)) {
-      return Response.json({ 
-        error: 'File type not supported. Please upload image files only (JPG, PNG, GIF, WEBP).' 
-      }, { status: 400 });
-    }
-
-    // Validate file size (10MB max)
-    const maxSize = 10 * 1024 * 1024; // 10MB
-    if (file.size > maxSize) {
-      return Response.json({ 
-        error: 'File size too large. Maximum size is 10MB.' 
-      }, { status: 400 });
-    }
-
-    // Sanitize the original filename
+    // Sanitize filename and split extension
     const originalName = file.name;
     const sanitizedName = originalName.replace(/[^a-zA-Z0-9.-]/g, '_');
-    
-    // Split filename and extension
     const lastDotIndex = sanitizedName.lastIndexOf('.');
     const nameWithoutExt = lastDotIndex > 0 ? sanitizedName.substring(0, lastDotIndex) : sanitizedName;
-    const extension = lastDotIndex > 0 ? sanitizedName.substring(lastDotIndex) : '';
+    const extension = lastDotIndex > 0 ? sanitizedName.substring(lastDotIndex).toLowerCase() : '';
 
-    // Ensure the resume templates directory exists
+    // Ensure directories exist
     const resumeDir = join(process.cwd(), 'data', '__resume_templates');
+    const uploadDir = join(process.cwd(), 'public', 'uploads');
     await mkdir(resumeDir, { recursive: true });
+    await mkdir(uploadDir, { recursive: true });
 
-    // Generate unique filename by checking if file exists
+    // Determine final HTML filename
     let filename = `${nameWithoutExt}.html`;
     let counter = 1;
-    
     while (true) {
       const filePath = join(resumeDir, filename);
       try {
         await access(filePath);
-        // File exists, create new name with counter
         filename = `${nameWithoutExt}_${counter}.html`;
         counter++;
       } catch {
-        // File doesn't exist, we can use this filename
         break;
       }
     }
+    const htmlPath = join(resumeDir, filename);
 
-    // Save the HTML file (converted by frontend)
-    const filePath = join(resumeDir, filename);
-    await writeFile(filePath, htmlContent || '', 'utf8');
+    if (extension === '.pdf') {
+      // ✅ Handle PDF conversion using pdftohtml
+      const tempPdfPath = join(uploadDir, sanitizedName);
+      const arrayBuffer = await file.arrayBuffer();
+      await writeFile(tempPdfPath, Buffer.from(arrayBuffer));
+      try {
+        execSync(`pdftohtml -q -noframes -s "${tempPdfPath}" "${htmlPath}"`);
+      } catch (conversionErr) {
+        console.error('PDF to HTML conversion failed:', conversionErr);
+        return NextResponse.json({ error: 'PDF conversion failed.' }, { status: 500 });
+      }
+    } else {
+      // Validate non-PDF uploads: images only
+      const allowedTypes = ['image/jpeg','image/jpg','image/png','image/gif','image/webp'];
+      if (!allowedTypes.includes(file.type)) {
+        return NextResponse.json({ error: 'Unsupported file type.' }, { status: 400 });
+      }
+      const maxSize = 10 * 1024 * 1024;
+      if (file.size > maxSize) {
+        return NextResponse.json({ error: 'File too large.' }, { status: 400 });
+      }
+      // Save HTML content from frontend if provided
+      await writeFile(htmlPath, htmlContent || '', 'utf8');
+    }
 
-    // Add the new file to checked templates by default
+    // Mark new template as checked
     const checkedTemplates = readCheckedTemplates();
     if (!checkedTemplates.includes(filename)) {
       checkedTemplates.push(filename);
       writeCheckedTemplates(checkedTemplates);
     }
 
-    return Response.json({
-      message: 'Resume template uploaded successfully',
-      filename: filename,
-      originalName: originalName,
-      size: htmlContent ? htmlContent.length : 0,
-      type: 'text/html',
-      uploadedAt: new Date().toISOString()
-    });
-
+    return NextResponse.json({ message: 'Template uploaded', filename, originalName });
   } catch (error) {
-    console.error('Upload resume template API error:', error);
-    return Response.json({ 
-      error: 'Failed to upload resume template. Please try again.' 
-    }, { status: 500 });
+    console.error('Upload error:', error);
+    return NextResponse.json({ error: 'Upload failed.' }, { status: 500 });
   }
-} 
+}
