@@ -6,6 +6,7 @@ import styles from './page.module.css';
 import NotificationManager from './components/NotificationManager';
 import ResumeTemplateList from './components/ResumeTemplateList';
 import Settings from './components/Settings';
+import UploadResumeSection from './components/UploadResumeSection'; // ✅ added for PDF upload
 
 export default function Home() {
   const [url, setUrl] = useState('');
@@ -256,7 +257,9 @@ export default function Home() {
             </button>
           </div>
         </header>
-        
+        {/* ✅ PDF Resume Upload Feature */}
+<UploadResumeSection />
+
         <div className={styles.contentGrid}>
           {/* Left Section */}
           <div className={styles.leftSection}>
